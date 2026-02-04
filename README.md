@@ -2,7 +2,6 @@
   <img src="assets/mobox-logo.jpg" alt="Mobox logo" />
 </div>
 
-Mobox is a platform for running AI agents in isolated sandboxes, with data ingestion, orchestration, and a streaming chat interface.
 
 ## Table of Contents
 
