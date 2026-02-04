@@ -1,10 +1,11 @@
-# Mobox
+![Mobox logo](assets/mobox-logo.jpg)
 
 Mobox is a platform for running AI agents in isolated sandboxes, with data ingestion, orchestration, and a streaming chat interface.
 
 ## Table of Contents
 
 - [Architecture](#architecture)
+- [Demo](#demo)
 - [What's Included](#whats-included)
   - [Data Ingestion](#data-ingestion)
   - [Agents](#agents)
@@ -19,17 +20,17 @@ Mobox is a platform for running AI agents in isolated sandboxes, with data inges
 ```mermaid
 flowchart TB
     subgraph Client["Client"]
-        FE[Frontend\nNext.js + AI SDK]
+        FE[Frontend - Next.js + AI SDK]
     end
 
     subgraph Backend["Backend"]
-        API[API\nFastAPI]
+        API[API - FastAPI]
     end
 
     subgraph Sandboxes["Sandboxes"]
         direction TB
-        SUB[Subprocess\nlocal dev]
-        MODAL[Modal\nremote]
+        SUB[Subprocess - local dev]
+        MODAL[Modal - remote]
     end
 
     subgraph Agents["Agents"]
@@ -60,6 +61,10 @@ flowchart TB
     FE -->|resume stream| REDIS
     API --> REDIS
 ```
+
+## Demo
+
+TODO: Add demo gif
 
 ## What's Included
 
