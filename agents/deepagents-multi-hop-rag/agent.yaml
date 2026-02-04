@@ -1,0 +1,21 @@
+# DeepAgents Multi-Hop RAG Agent
+name: DeepAgents Multi-Hop RAG Agent
+description: A multi-hop RAG agent that uses DeepAgents to perform multi-hop RAG tasks.
+purpose: Perform multi-hop RAG tasks using DeepAgents.
+
+# Agent framework (claude, openai, gemini, etc.)
+framework: deepagents
+
+# Docker registry URL for prebuilt image
+image: docker.io/pedropeixoto6/deepagents-multi-hop-rag:v0.0.1
+
+# Entrypoint - command to execute in the sandbox
+entrypoint: ["python", "/app/run_agent.py"]
+
+# Environment variables this agent needs (values come from server env)
+env_vars:
+  - OPENAI_API_KEY
+
+# Sandbox lifecycle settings
+timeout: 1800        # 30 min max lifetime
+idle_timeout: 600    # 10 min idle before termination

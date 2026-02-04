@@ -1,0 +1,17 @@
+[project]
+name = "deepagents-multi-hop-rag"
+version = "0.1.0"
+description = "Langchain deepagents agent for multi-hop rag"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "deepagents>=0.3.9",
+    "dotenv>=0.9.9",
+    "shared",
+    "langchain>=1.2.7",
+    "langchain-openai>=0.3.0",
+    "weaviate-client>=4.19.2"
+]
+
+[tool.uv.sources]
+shared = { path = "../../shared" }

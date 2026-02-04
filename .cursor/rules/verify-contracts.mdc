@@ -1,0 +1,39 @@
+---
+description: Verify API contracts between Python backend and TypeScript frontend are aligned
+globs: 
+alwaysApply: true
+---
+
+# Verify API Contracts
+
+**CRITICAL**: When modifying API endpoints, server actions, or data fetching code, verify that frontend Zod schemas match backend Pydantic schemas.
+
+## Files to Compare
+
+| Frontend                          | Backend                          |
+|-----------------------------------|----------------------------------|
+| `frontend/lib/api/contracts.ts`   | `api/routes/schemas/*.py`        |
+
+## Schema Mapping
+
+| Frontend (Zod)                    | Backend (Pydantic)               | Endpoint                          |
+|-----------------------------------|----------------------------------|-----------------------------------|
+| `ChatSessionResponseSchema`       | `ChatSessionResponse`            | `GET /sessions/`                  |
+| `PaginatedMessagesResponseSchema` | `PaginatedMessagesResponse`      | `GET /sessions/{id}/messages`     |
+| `ChatRequestSchema`               | `ChatRequest`                    | `POST /chat/`                     |
+| `ChatContextResponseSchema`       | `ChatContextResponse`            | `GET /sessions/{id}/context`      |
+| `DeleteSessionResponseSchema`     | `DeleteSessionResponse`          | `DELETE /sessions/{id}`           |
+
+## Type Equivalents
+
+- `str` → `z.string()`
+- `int` → `z.number().int()`
+- `Optional[T]` → `z.T().nullable().optional()`
+- `List[T]` → `z.array(T)`
+
+## When Changing APIs
+
+1. Update backend Pydantic schema first
+2. Update `frontend/lib/api/contracts.ts` to match
+3. Update server actions if needed
+4. Run `pnpm build` in frontend to verify

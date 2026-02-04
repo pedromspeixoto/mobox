@@ -1,0 +1,16 @@
+[project]
+name = "shared"
+version = "0.1.0"
+description = "Shared utilities for all agents"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain-core>=0.3.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["shared", "shared.utils"]
+package-dir = {"shared" = ".", "shared.utils" = "utils"}

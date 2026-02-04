@@ -1,0 +1,22 @@
+# DeepAgents Simple Research Agent
+name: DeepAgents Simple Research Agent
+description: A research agent that uses DeepAgents to perform simple research tasks.
+purpose: Perform simple research tasks using DeepAgents.
+
+# Agent framework (claude, openai, gemini, etc.)
+framework: deepagents
+
+# Docker registry URL for prebuilt image
+image: docker.io/pedropeixoto6/deepagents-simple-research:v1.0.2
+
+# Entrypoint - command to execute in the sandbox
+entrypoint: ["python", "/app/run_agent.py"]
+
+# Environment variables this agent needs (values come from server env)
+env_vars:
+  - OPENAI_API_KEY
+  - TAVILY_API_KEY
+
+# Sandbox lifecycle settings
+timeout: 1800        # 30 min max lifetime
+idle_timeout: 600    # 10 min idle before termination

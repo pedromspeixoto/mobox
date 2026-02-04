@@ -1,0 +1,44 @@
+services:
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.35.3
+    container_name: weaviate
+    ports:
+      - "8000:8080"
+      - "50051:50051"
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    environment:
+      - PERSISTENCE_DATA_PATH=/var/lib/weaviate
+      - QUERY_DEFAULTS_LIMIT=25
+      - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
+      - CLUSTER_HOSTNAME=node1
+      - ENABLE_MODULES=text2vec-transformers
+      - TRANSFORMERS_INFERENCE_API=http://text2vec-transformers:8080
+    depends_on:
+      - text2vec-transformers
+    restart: unless-stopped
+    networks:
+      - weaviate-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/v1/meta"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  text2vec-transformers:
+    image: cr.weaviate.io/semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
+    container_name: text2vec-transformers
+    environment:
+      - ENABLE_CUDA=0  # Set to 1 to enable GPU acceleration
+    restart: unless-stopped
+    networks:
+      - weaviate-network
+
+volumes:
+  weaviate_data:
+    driver: local
+
+networks:
+  weaviate-network:
+    driver: bridge

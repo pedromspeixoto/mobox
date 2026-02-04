@@ -1,0 +1,5 @@
+load_from:
+  - python_file:
+      relative_path: src/mobox_dagster/definitions.py
+      working_directory: .
+      location_name: mobox_dagster

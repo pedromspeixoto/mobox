@@ -1,0 +1,33 @@
+---
+description: Enforce event streaming pattern - agents emit, shared parses, API formats to AI SDK
+globs: api/routes/chat.py, api/core/event_formatters.py, shared/events.py
+alwaysApply: true
+---
+
+# Event Streaming Pattern
+
+**CRITICAL**: Agents emit → shared parser normalizes → API converts to AI SDK. Parser is single source of truth for normalization.
+
+## Flow
+
+1. **Agents** (`/agents`) emit JSON events via `shared/emitter.py` – framework-specific format
+2. **Shared** parses via `parser.parse(raw)` from `shared/events.py` → produces normalized `StreamEvent` (EventType + data)
+3. **API** converts via `formatter.format(event)` → AI SDK SSE for frontend (single NormalizedToAISDK)
+
+## Rules for `api/routes/chat.py`
+
+- **ALWAYS** parse first: `event = parser.parse({"type": agent_event.type, "data": agent_event.data})`
+- **ALWAYS** use `event.type` (EventType) and `event.data` for collection logic (usage, status, sdk_session_id)
+- **ALWAYS** use `event.type` for control flow (e.g. `event.type == EventType.DONE` to break)
+- **NEVER** branch on `agent_event.type` or `agent_event.data` for business logic
+- **NEVER** extract usage/status/result from raw agent_event – use parsed event only
+
+## ChatEvent Persistence
+
+Use `_CHAT_EVENT_PERSIST` mapping: EventType → agent type string. Persist from `event.data`, not `agent_event.data`.
+
+## Adding New Frameworks
+
+1. Add parse logic in `shared/events.py` (EventParser._parse_* for the new framework)
+2. Map to normalized EventType (USAGE, RESULT, STATUS, etc.)
+3. Chat route and formatter require no changes – they consume normalized events only

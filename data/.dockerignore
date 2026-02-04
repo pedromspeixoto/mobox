@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[oc]
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+ENV/
+env/
+
+# Dagster
+.dagster_home/
+.tmp_dagster_home*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Testing
+testing_stuff/
+*.log
+
+# Documentation
+*.md
+README.md
